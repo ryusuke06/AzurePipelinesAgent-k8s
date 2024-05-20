@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: azure-devops-agent
-        image: <your-docker-image>
+        image: ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}
         env:
         - name: AZP_URL
           valueFrom:
