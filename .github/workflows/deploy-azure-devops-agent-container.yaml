@@ -55,6 +55,12 @@ jobs:
                 cluster-name: ${{ env.CLUSTER_NAME }}
                 resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
                 use-kubelogin: "true"
+            - name: Create Kubernetes ConfigMap
+              run: |
+                kubectl create configmap azure-registry-config \
+                --from-literal=CONTAINER_REGISTRY=${{ env.AZURE_CONTAINER_REGISTRY }} \
+                --from-literal=CONTAINER_NAME=${{ env.CONTAINER_NAME }} \
+                --dry-run=client -o yaml | kubectl apply -f -
             - name: Create Kubernetes Secrets
               run: |
                 kubectl create secret generic azure-devops-secret \
