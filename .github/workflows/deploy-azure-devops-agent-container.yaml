@@ -55,6 +55,13 @@ jobs:
                 cluster-name: ${{ env.CLUSTER_NAME }}
                 resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
                 use-kubelogin: "true"
+            - name: Create Kubernetes Secrets
+              run: |
+                kubectl create secret generic azure-devops-secret \
+                  --from-literal=AZP_URL=${{ secrets.AZP_URL }} \
+                  --from-literal=AZP_TOKEN=${{ secrets.AZP_TOKEN }} \
+                  --from-literal=AZP_POOL=${{ secrets.AZP_POOL }} \
+                  --dry-run=client -o yaml | kubectl apply -f -
             - uses: Azure/k8s-deploy@v4
               name: Deploys application
               with:
