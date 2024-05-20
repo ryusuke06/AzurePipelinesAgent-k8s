@@ -1,9 +1,11 @@
 # ベースイメージを指定
-FROM mcr.microsoft.com/azure-cli
+FROM ubuntu:latest
 
 # 必要なパッケージのインストール
 RUN apt-get update -qqy && \
-    apt-get install -qqy liblttng-ust0 libkrb5-3 zlib1g libicu[0-9][0-9] libcurl4 curl jq && \
+    apt-get install -qqy \
+    curl \
+    jq && \
     apt-get upgrade -qqy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -11,8 +13,8 @@ RUN apt-get update -qqy && \
 # Azure Pipelines Agentのインストール
 RUN mkdir /agent
 WORKDIR /agent
-RUN curl -o agent.tar.gz -L https://vstsagentpackage.azureedge.net/agent/3.239.1/vsts-agent-linux-x64-3.239.1.tar.gz &&
-RUN tar zxvf agent.tar.gz
+RUN curl -o agent.tar.gz -L https://vstsagentpackage.azureedge.net/agent/3.239.1/vsts-agent-linux-x64-3.239.1.tar.gz && \
+    tar zxvf agent.tar.gz
 
 # スクリプトをコピー
 COPY start.sh .
