@@ -5,7 +5,8 @@ FROM ubuntu:latest
 RUN apt-get update -qqy && \
     apt-get install -qqy \
     curl \
-    jq && \
+    jq \
+    libicu && \
     apt-get upgrade -qqy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

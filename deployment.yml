@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: azure-devops-agent
-        image: $(CONTAINER_REGISTRY)/$(CONTAINER_NAME)
+        image: workflowstandard.azurecr.io/azure-devops-agent
         env:
         - name: AZP_URL
           valueFrom:
