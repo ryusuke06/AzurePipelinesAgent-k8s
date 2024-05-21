@@ -68,6 +68,13 @@ jobs:
                   --from-literal=AZP_TOKEN=${{ secrets.AZP_TOKEN }} \
                   --from-literal=AZP_POOL=${{ secrets.AZP_POOL }} \
                   --dry-run=client -o yaml | kubectl apply -f -
+            - name: Create Kubernetes Secrets for ACR
+              run: |
+                kubectl create secret docker-registry acr-auth \
+                  --docker-server=${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io \
+                  --docker-username=${{ secrets.ACR_USERNAME }} \
+                  --docker-password=${{ secrets.ACR_PASSWORD }} \
+                  --dry-run=client -o yaml | kubectl apply -f -
             - uses: Azure/k8s-deploy@v4
               name: Deploys application
               with:
