@@ -31,5 +31,5 @@ spec:
             secretKeyRef:
               name: azure-devops-secret
               key: AZP_POOL
-        imagePullSecrets:
-        - name: acr-auth
+      imagePullSecrets:
+      - name: acr-auth
